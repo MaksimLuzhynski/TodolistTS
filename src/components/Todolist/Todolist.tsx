@@ -7,6 +7,7 @@ export type TodolistPropsType = {
 }
 
 export function Todolist(props: TodolistPropsType) {
+    
     return (<div className={styles.todolist}>
         <div>
             <h3>{props.title}</h3>
