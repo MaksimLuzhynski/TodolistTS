@@ -1,3 +1,19 @@
-.todolist{
+.todolist {
     color: #61dafb;
+}
+
+.error {
+    border: red 2px solid;
+}
+
+.error_message {
+    color: red;
+}
+
+.active_filter {
+    background-color: #61dafb;
+}
+
+.is_done {
+    opacity: 0.4;
 }
