@@ -2,14 +2,6 @@
     color: #61dafb;
 }
 
-.error {
-    border: red 2px solid;
-}
-
-.error_message {
-    color: red;
-}
-
 .active_filter {
     background-color: #61dafb;
 }
