@@ -1,3 +1,4 @@
+import { Button, TextField } from "@material-ui/core";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import styles from './AddItemForm.module.css'
 
@@ -35,14 +36,24 @@ export function AddItemForm(props: AddItemFormPropsType) {
     return (
         <div>
             <div>
-                <input
-                    className={error ? styles.error : ""}
-                    value={newTaskTitle}
+                <TextField
                     onChange={onNewTaskTitleChangeHandler}
                     onKeyPress={onKeyPressHandler}
+                    variant={"standard"}
+                    label={"Title"}
+                    value={newTaskTitle}
+                    helperText={error}
+                    // className={error ? styles.error : ""}
+                    error={!!error}                                   //         ????????????????
+                    color={"primary"}
                 />
-                <button onClick={addNewTaskTitle}>+</button>
+                <Button
+                    onClick={addNewTaskTitle}
+                    variant={"contained"}
+                    style={{ backgroundColor: "#61dafb" }}
+                // className={styles.button_color}    //                Подключить стиль в AddItemForm.module.css
+                >+</Button>
             </div>
-            {error && <div className={styles.error_message}>{error}</div>}
+            {/* {error && <div className={styles.error_message}>{error}</div>} */}
         </div>)
 }

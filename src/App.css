@@ -1,13 +1,18 @@
 .App {
-  background-color: #282c34;
-  padding         : 30px;
-  display         : flex;
+  background-color   : #282c34;
+  /* background-color: #22252c; */
+
+
+  /* background-color: #23272e; */
+
+  /* background-color: #1e2127; */
+  /* background-color: rgb(0,30,60); */
+
+  /* padding         : 30px;
+  display         : flex; */
 }
 
-.App>div {
+/* .App>div {
   margin-right: 50px;
   margin-bottom: 500px;
-}
-
-/* background-color: #282c34; */
-/* color: #61dafb; */
+} */
