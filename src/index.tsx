@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@material-ui/core';
+import AppWithReducers from './AppWithReducers';
+import AppWithRedux from './AppWithRedux';
+import { Provider } from 'react-redux';
+import { store } from './state/store';
 
 const theme = createTheme({
   palette: {
@@ -18,9 +22,11 @@ const theme = createTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme} >
-      <App />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme} >
+        <AppWithRedux />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

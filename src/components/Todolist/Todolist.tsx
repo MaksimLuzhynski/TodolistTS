@@ -10,15 +10,14 @@ export type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
     id: string
+    filter: FilterValueType
     removeTask: (id: string, todolistId: string) => void
-    changeFilter: (value: FilterValueType, todolistId: string) => void
     addTask: (newTaskTitle: string, todolistId: string) => void
     changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
     changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
-    filter: FilterValueType
-
+    changeFilter: (value: FilterValueType, todolistId: string) => void
 }
 
 export function Todolist(props: TodolistPropsType) {
@@ -34,7 +33,7 @@ export function Todolist(props: TodolistPropsType) {
     const onActiveClickHandler = () => { props.changeFilter("active", props.id) }
     const onCompletedClickHandler = () => { props.changeFilter("completed", props.id) }
 
-    const addTask = (title: string) => { props.addTask(title, props.id) }
+    const addTaskHandler = (title: string) => { props.addTask(title, props.id) }
 
     return (<div className={styles.todolist}>
         <div>
@@ -50,7 +49,7 @@ export function Todolist(props: TodolistPropsType) {
                 </IconButton>
             </h2>
 
-            <AddItemForm addItem={addTask} />
+            <AddItemForm addItem={addTaskHandler} />
 
             <div>
                 {
