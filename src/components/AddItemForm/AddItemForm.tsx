@@ -1,4 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
+import React from "react";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import styles from './AddItemForm.module.css'
 
@@ -6,7 +7,7 @@ export type AddItemFormPropsType = {
     addItem: (newTaskTitle: string) => void
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType )=> {
 
     let [newTaskTitle, setNewTaskTitle] = useState("")
     let [error, setError] = useState<null | string>(null)
@@ -56,4 +57,4 @@ export function AddItemForm(props: AddItemFormPropsType) {
             </div>
             {/* {error && <div className={styles.error_message}>{error}</div>} */}
         </div>)
-}
+})
