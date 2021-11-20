@@ -24,7 +24,7 @@ export type TodolistType = {
 }
 export type FilterValueType = "all" | "active" | "completed"
 
-function AppWithRedux() {
+export function AppWithRedux() {
 
     const dispatch = useDispatch();
     const todolists = useSelector<RootStateType, Array<TodolistType>>(store => store.todolists);
