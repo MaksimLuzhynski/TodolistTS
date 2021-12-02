@@ -1,25 +1,18 @@
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import { AddItemForm } from './components/AddItemForm/AddItemForm';
 import { Todolist } from './components/Todolist/Todolist';
 import { Menu } from '@material-ui/icons';
+import { FilterValueType, TodolistType } from './state/todolists-reducer';
+import { TaskType } from './state/tasks-reducer';
+import { TaskPriorities, TaskStatuses } from './api/tasks-api';
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValueType
-}
-export type FilterValueType = "all" | "active" | "completed"
 
 function App() {
 
@@ -27,22 +20,22 @@ function App() {
     let todolistId2 = v1();
 
     let [todolists, setTodolists] = useState<Array<TodolistType>>([
-        { id: todolistId1, title: "What to learn", filter: "all" },
-        { id: todolistId2, title: "What to buy", filter: "all" },
+        { id: todolistId1, title: "What to learn", filter: "all", addedDate: "", order: 0 },
+        { id: todolistId2, title: "What to buy", filter: "all", addedDate: "", order: 0 },
     ]);
 
     let [tasksObj, setTasks] = useState<TasksStateType>({
         [todolistId1]:
-            [{ id: v1(), title: "HTML", isDone: true },
-            { id: v1(), title: "CSS", isDone: true },
-            { id: v1(), title: "JS", isDone: false },
-            { id: v1(), title: "React", isDone: false },
-            { id: v1(), title: "Vue", isDone: false },],
+            [{ id: v1(), title: "HTML", status: TaskStatuses.Completed, todoListId: todolistId1, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },
+            { id: v1(), title: "CSS", status: TaskStatuses.Completed, todoListId: todolistId1, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },
+            { id: v1(), title: "JS", status: TaskStatuses.New, todoListId: todolistId1, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },
+            { id: v1(), title: "React", status: TaskStatuses.New, todoListId: todolistId1, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },
+            { id: v1(), title: "Vue", status: TaskStatuses.New, todoListId: todolistId1, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },],
         [todolistId2]:
-            [{ id: v1(), title: "Milk", isDone: true },
-            { id: v1(), title: "Cola", isDone: true },
-            { id: v1(), title: "Limon", isDone: false },
-            { id: v1(), title: "Beer", isDone: false },],
+            [{ id: v1(), title: "Milk", status: TaskStatuses.Completed, todoListId: todolistId2, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },
+            { id: v1(), title: "Cola", status: TaskStatuses.Completed, todoListId: todolistId2, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },
+            { id: v1(), title: "Limon", status: TaskStatuses.New, todoListId: todolistId2, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },
+            { id: v1(), title: "Beer", status: TaskStatuses.New, todoListId: todolistId2, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },],
     })
 
     function removeTodolist(todolistId: string) {
@@ -54,7 +47,7 @@ function App() {
     }
 
     function addTodolist(title: string) {
-        let newTodolist: TodolistType = { id: v1(), title: title, filter: "all" };
+        let newTodolist: TodolistType = { id: v1(), title: title, filter: "all", addedDate: "", order: 0 };
         setTodolists([...todolists, newTodolist]);
         setTasks({ [newTodolist.id]: [], ...tasksObj });
     }
@@ -75,15 +68,15 @@ function App() {
     }
 
     function addTask(newTaskTitle: string, todolistId: string) {
-        let newTask = { id: v1(), title: newTaskTitle, isDone: false };
+        let newTask = { id: v1(), title: newTaskTitle, todoListId: todolistId, status: TaskStatuses.New, description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" };
         tasksObj[todolistId] = [newTask, ...tasksObj[todolistId]]
         setTasks({ ...tasksObj });
     }
 
-    function changeTaskStatus(id: string, isDone: boolean, todolistId: string) {
+    function changeTaskStatus(id: string, status: TaskStatuses, todolistId: string) {
         let task = tasksObj[todolistId].find(item => item.id === id)
         if (task) {
-            task.isDone = isDone;
+            task.status = status;
             setTasks({ ...tasksObj });
         }
     }
@@ -138,15 +131,15 @@ function App() {
                         todolists.map((item) => {
                             let tasksForTodolist = tasksObj[item.id];
                             if (item.filter === "active") {
-                                tasksForTodolist = tasksForTodolist.filter(item => item.isDone === false)
+                                tasksForTodolist = tasksForTodolist.filter(item => item.status === TaskStatuses.New)
                             }
                             if (item.filter === "completed") {
-                                tasksForTodolist = tasksForTodolist.filter(item => item.isDone === true)
+                                tasksForTodolist = tasksForTodolist.filter(item => item.status === TaskStatuses.Completed)
                             }
 
                             return (
-                                <Grid item> 
-                                    <Paper style={{ padding: "20px", backgroundColor: " #23272e" }}>       
+                                <Grid item>
+                                    <Paper style={{ padding: "20px", backgroundColor: " #23272e" }}>
                                         <Todolist
                                             key={item.id}
                                             id={item.id}
