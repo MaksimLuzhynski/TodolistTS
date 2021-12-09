@@ -1,14 +1,16 @@
 import { Button } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import { Delete } from '@material-ui/icons'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { TaskStatuses } from '../../api/tasks-api'
-import { TaskType } from '../../state/tasks-reducer'
+import { fetchTasksTC, TaskType } from '../../state/tasks-reducer'
 import { FilterValueType } from '../../state/todolists-reducer'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
 import { Task } from '../Task/Task'
+// import styles from './Todolist.module.css'
 import styles from './Todolist.module.css'
 
 export type TodolistPropsType = {
@@ -26,6 +28,21 @@ export type TodolistPropsType = {
 }
 
 export const Todolist = React.memo((props: TodolistPropsType) => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+
+        // todolistsAPI.getTodolists()
+        //     .then(res => {
+        //         dispatch(setTodolistsAC(res.data))
+        //     })
+
+        // fetchTodolistsThunk(dispatch);
+
+        dispatch(fetchTasksTC(props.id));
+    }, []);
+
 
     const removeTodolist = () => {
         props.removeTodolist(props.id)

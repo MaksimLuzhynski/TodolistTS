@@ -3,12 +3,13 @@ import './App.css';
 import { AddItemForm } from './components/AddItemForm/AddItemForm';
 import { Todolist } from './components/Todolist/Todolist';
 import { Menu } from '@material-ui/icons';
-import { addTodolistAC, changeTodolistAC, changeTodolistFilterAC, removeTodolistAC, TodolistType, FilterValueType } from './state/todolists-reducer';
+import { addTodolistAC, changeTodolistAC, changeTodolistFilterAC, removeTodolistAC, TodolistType, FilterValueType, setTodolistsAC, fetchTodolistsTC } from './state/todolists-reducer';
 import { addTaskAC, changeTaskStatuskAC, changeTaskTitleAC, removeTaskAC, TaskType } from './state/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStateType } from './state/store';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { TaskStatuses } from './api/tasks-api';
+import { todolistsAPI } from './api/todolists-api';
 
 
 export type TasksStateType = {
@@ -22,6 +23,17 @@ export function AppWithRedux() {
     const todolists = useSelector<RootStateType, Array<TodolistType>>(store => store.todolists);
     const tasks = useSelector<RootStateType, TasksStateType>(store => store.tasks);
 
+    useEffect(() => {
+
+        // todolistsAPI.getTodolists()
+        //     .then(res => {
+        //         dispatch(setTodolistsAC(res.data))
+        //     })
+
+        // fetchTodolistsThunk(dispatch);
+
+        dispatch(fetchTodolistsTC());
+    }, [])
 
     const removeTodolist = useCallback((todolistId: string) => {
         dispatch(removeTodolistAC(todolistId));
@@ -91,7 +103,7 @@ export function AppWithRedux() {
                             let tasksForTodolist = tasks[item.id];
                             return (
                                 <Grid item>
-                                    <Paper style={{ padding: "20px", backgroundColor: " #23272e" }}>
+                                    <Paper style={{ padding: "20px", backgroundColor: " #263648" }}>      {/*ЦВЕТ #23272e*/}
                                         <Todolist
                                             key={item.id}
                                             id={item.id}
