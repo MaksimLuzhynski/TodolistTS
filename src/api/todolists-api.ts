@@ -29,15 +29,15 @@ type ResponseType<D = {}> = {
 export const todolistsAPI = {
 
     getTodolists() {
-        return instans.get<Array<TodolistAPIType>>("todo-lists");
+        return instans.get<Array<TodolistAPIType>>("todo-lists/");
     },
-    createTodolist(title: string) {
-        return instans.post<ResponseType<{ item: TodolistAPIType }>>("todo-lists", { title: title });
+    addTodolist(title: string) {
+        return instans.post<ResponseType<{ item: TodolistAPIType }>>("todo-lists/", { title: title });
     },
-    deleteTodolist(todolistId: string) {
+    removeTodolist(todolistId: string) {
         return instans.delete<ResponseType>(`todo-lists/${todolistId}`);
     },
-    putTodolist(todolistId: string, newTitle: string) {
+    changeTodolist(todolistId: string, newTitle: string) {
         return instans.put<ResponseType>(`todo-lists/${todolistId}`, { title: newTitle })
     },
 

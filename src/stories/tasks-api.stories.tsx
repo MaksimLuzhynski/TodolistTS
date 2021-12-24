@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Meta } from '@storybook/react';
-import { tasksAPI } from '../api/tasks-api';
+import { TaskPriorities, tasksAPI, TaskStatuses, UpdateTaskType } from '../api/tasks-api';
+import { title } from 'process';
 
 
 export default {
@@ -18,7 +19,7 @@ const settings = {
 export const GetTasks: React.VFC<{}> = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = "acc38aa0-096d-4d4a-957a-c0ed341cde38"//Id прописываю непосредственно в коде (для удобства), а не через input в storybook
+        const todolistId = "2a6d4857-92f4-4ccf-af2b-4e3034fad8b6"//Id прописываю непосредственно в коде (для удобства), а не через input в storybook
         tasksAPI.getTasks(todolistId)
             .then((res) => {
                 setState(res.data)
@@ -33,7 +34,7 @@ export const DeleteTask: React.VFC<{}> = () => {
     const [taskId, setTaskId] = useState<string>("")
 
     const DeleteTaskHandler = () => {
-        tasksAPI.deleteTask(todolistId, taskId)
+        tasksAPI.removeTask(todolistId, taskId)
             .then((res) => {
                 setState(res.data)
             })
@@ -61,7 +62,7 @@ export const CreateTask: React.VFC<{}> = () => {
     const [title, setTitle] = useState<string>("")
 
     const CreateTaskHandler = () => {
-        tasksAPI.createTask(todolistId, title)
+        tasksAPI.addTask(todolistId, title)
             .then((res) => {
                 setState(res.data)
             })
@@ -88,9 +89,19 @@ export const UpdateTaskTitle: React.VFC<{}> = () => {
     const [todolistId, setTodolistId] = useState<string>("")
     const [taskId, setTaskId] = useState<string>("")
     const [newTitle, setNewTitle] = useState<string>("")
-
+   
     const UpdateTaskTitleHandler = () => {
-        tasksAPI.putTask(todolistId, taskId, newTitle)
+
+        const model: UpdateTaskType = {
+            title: newTitle,
+            description: "привет",
+            priority: TaskPriorities.Low,
+            startDate: "8888",
+            deadline: "9999",
+            status: TaskStatuses.New
+        }
+
+        tasksAPI.updateTask(todolistId, taskId, model)
             .then((res) => {
                 setState(res.data)
             })

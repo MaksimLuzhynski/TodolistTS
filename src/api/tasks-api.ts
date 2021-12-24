@@ -49,11 +49,11 @@ type ResponseType<D = {}> = {
     fieldsErrors: Array<string>
     data: D
 }
-type UpdateTaskType = {
+export type UpdateTaskType = {
     title: string
     description: string
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
 }
@@ -65,16 +65,16 @@ export const tasksAPI = {
         return instans.get<GetTaskResponseType>(`todo-lists/${todolistId}/tasks`);
     },
 
-    deleteTask(todolistId: string, taskId: string) {
+    removeTask(todolistId: string, taskId: string) {
         return instans.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
     },
 
-    createTask(todolistId: string, title: string) {
+    addTask(todolistId: string, title: string) {
         return instans.post<ResponseType<{ item: TaskAPIType }>>(`todo-lists/${todolistId}/tasks/`, { title: title });
     },
 
-    putTask(todolistId: string, taskId: string, newTitle: string) {
-        return instans.put<UpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, { title: newTitle })
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskType) {                                                  //??????????????????
+        return instans.put<UpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
 
 }

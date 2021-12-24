@@ -30,7 +30,7 @@ export const CreateTodolist: React.VFC<{}> = () => {
     const [title, setTitle] = useState<string>("")
 
     const CreateTodolistHandler = () => {
-        todolistsAPI.createTodolist(title)
+        todolistsAPI.addTodolist(title)
             .then((res) => {
                 setState(res.data)
             })
@@ -52,7 +52,7 @@ export const DeleteTodolist: React.VFC<{}> = () => {
     const [todolistId, setTodolistId] = useState<string>("")
 
     const DeleteTodolistHandler = () => {
-        todolistsAPI.deleteTodolist(todolistId)
+        todolistsAPI.removeTodolist(todolistId)
             .then((res) => {
                 setState(res.data)
             })
@@ -69,16 +69,6 @@ export const DeleteTodolist: React.VFC<{}> = () => {
     </div>
 }
 
-
-
-
-
-
-
-
-
-
-
 export const UpdateTodolistTitle: React.VFC<{}> = () => {
     const [state, setState] = useState<any>(null)
     const [todolistId, setTodolistId] = useState<string>("")
@@ -93,7 +83,7 @@ export const UpdateTodolistTitle: React.VFC<{}> = () => {
     //         })
     // }, [])
     const UpdateTodolistTitleHandler = () => {
-        todolistsAPI.putTodolist(todolistId, newTitle)
+        todolistsAPI.changeTodolist(todolistId, newTitle)
             .then((res) => {
                 setState(res.data)
             })

@@ -1,7 +1,7 @@
 import { v1 } from "uuid";
 import { TaskPriorities, TaskStatuses } from "../api/tasks-api";
 import { TasksStateType } from "../App";
-import { addTaskAC, changeTaskStatuskAC, changeTaskTitleAC, removeTaskAC, setTasksAC, tasksReducer } from "./tasks-reducer";
+import { addTaskAC, removeTaskAC, setTasksAC, tasksReducer, updateTaskAC } from "./tasks-reducer";
 import { addTodolistAC, setTodolistsAC, TodolistType } from "./todolists-reducer";
 
 test('correct task should be removed', () => {
@@ -38,7 +38,18 @@ test('correct task should be added', () => {
             { id: "3", title: "Limon", status: TaskStatuses.New, todoListId: "todolistId2", description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },],
     }
 
-    const endState = tasksReducer(startState, addTaskAC("Beer", "todolistId2"))
+    const endState = tasksReducer(startState, addTaskAC({
+        id: "id exist",
+        title: "Beer",
+        status: TaskStatuses.New,
+        todoListId: "todolistId2",
+        description: "",
+        priority: TaskPriorities.Low,
+        startDate: "",
+        deadline: "",
+        order: 0,
+        addedDate: ""
+    }))
 
     expect(endState["todolistId1"].length).toBe(3);
     expect(endState["todolistId2"].length).toBe(4);
@@ -60,7 +71,7 @@ test('status of specified task should be changed', () => {
             { id: "3", title: "Limon", status: TaskStatuses.New, todoListId: "todolistId2", description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },],
     }
 
-    const endState = tasksReducer(startState, changeTaskStatuskAC("2", TaskStatuses.New, "todolistId2"))
+    const endState = tasksReducer(startState, updateTaskAC("2", { status: TaskStatuses.New }, "todolistId2"))
 
 
     expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New);
@@ -82,8 +93,7 @@ test('title of specified task should be changed', () => {
             { id: "3", title: "Limon", status: TaskStatuses.New, todoListId: "todolistId2", description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },],
     }
 
-    const endState = tasksReducer(startState, changeTaskTitleAC("2", "Beer", "todolistId2"))
-
+    const endState = tasksReducer(startState, updateTaskAC("2", { title: "Beer" }, "todolistId2"))
 
 
     expect(endState["todolistId2"][1].title).toBe("Beer");
@@ -107,8 +117,13 @@ test('new property with new array should be added when new todolist is added', (
             { id: "3", title: "Limon", status: TaskStatuses.New, todoListId: "todolistId2", description: "", priority: TaskPriorities.Low, startDate: "", deadline: "", order: 0, addedDate: "" },],
     };
 
-    const endState = tasksReducer(startState, addTodolistAC("new todolist"))
-
+    const endState = tasksReducer(startState, addTodolistAC({
+        id: "gtrgrgrgg",
+        title: "new todolist",
+        filter: "all",
+        addedDate: "",
+        order: 0,
+    }))
 
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");
