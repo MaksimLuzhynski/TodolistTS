@@ -1,15 +1,15 @@
 import React from 'react'
-import { AppWithRedux } from "./AppWithRedux";
+import { App} from "./App";
 import { Meta } from '@storybook/react';
 import { action } from '@storybook/addon-actions'
 import { Provider } from 'react-redux';
-import { store } from './state/store';
-import { ReduxStoreProviderDecorator } from './stories/ReduxStorePviderDecorator';
+import { store } from '../state/store';
+import { ReduxStoreProviderDecorator } from '../stories/ReduxStorePviderDecorator';
 
 
 export default {
-    component: AppWithRedux,
-    title: 'Components/AppWithRedux',
+    component: App,
+    title: 'Components/App',
     decorators: [ReduxStoreProviderDecorator],
     addons: [
         '@storybook/addon-links',
@@ -36,4 +36,4 @@ export default {
 
 const callbackChangeTitle = action('Title was changed')
 
-export const AppWithReduxExample: React.VFC<{}> = () => <AppWithRedux />
+export const AppExample: React.VFC<{}> = () => <App />

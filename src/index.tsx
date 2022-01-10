@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme } from '@material-ui/core';
-import AppWithReducers from './AppWithReducers';
-import AppWithRedux from './AppWithRedux';
+import App from './app/App';
 import { Provider } from 'react-redux';
 import { store } from './state/store';
 
@@ -24,7 +22,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme} >
-        <AppWithRedux />
+        <App />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

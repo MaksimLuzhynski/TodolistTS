@@ -12,19 +12,6 @@ const instans = axios.create({
     ...settings
 })
 
-export type TodolistAPIType = {
-    id: string
-    title: string
-    addedDate: string
-    order: number
-}
-type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors: Array<string>
-    data: D
-}
-
 
 export const todolistsAPI = {
 
@@ -41,4 +28,18 @@ export const todolistsAPI = {
         return instans.put<ResponseType>(`todo-lists/${todolistId}`, { title: newTitle })
     },
 
+}
+
+// types
+export type TodolistAPIType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+}
+type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: D
 }

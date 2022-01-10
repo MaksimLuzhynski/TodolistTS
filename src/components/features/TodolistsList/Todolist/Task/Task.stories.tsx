@@ -2,7 +2,7 @@ import React from 'react'
 import { Task } from "./Task";
 import { Meta } from '@storybook/react';
 import { action } from '@storybook/addon-actions'
-import { TaskPriorities, TaskStatuses } from '../../api/tasks-api';
+import { TaskPriorities, TaskStatuses } from '../../../../../api/tasks-api';
 
 
 export default {

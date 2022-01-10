@@ -1,6 +1,6 @@
 import { v1 } from "uuid";
 import { TaskPriorities, TaskStatuses } from "../api/tasks-api";
-import { TasksStateType } from "../App";
+import { TasksStateType } from "../app/App";
 import { addTaskAC, removeTaskAC, setTasksAC, tasksReducer, updateTaskAC } from "./tasks-reducer";
 import { addTodolistAC, setTodolistsAC, TodolistType } from "./todolists-reducer";
 
