@@ -2,9 +2,17 @@ import { AppBar, Button, Container, Grid, IconButton, Toolbar, Typography } from
 import './App.css';
 import { Menu } from '@material-ui/icons';
 import { TodolistsList } from '../components/features/TodolistsList/TodolistsList'
+import { LinearProgress } from '@mui/material';
+import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar';
+import { useSelector } from 'react-redux';
+import { RequestStatusType } from '../state/app-reducer';
+import { RootStateType } from '../state/store';
+
 
 
 export function App() {
+
+    const status = useSelector<RootStateType, RequestStatusType>(state => state.app.status)
 
     return (
         <div className="App">
@@ -28,10 +36,12 @@ export function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
                 <TodolistsList />
             </Container>
+            <ErrorSnackbar />      {/*  ??????????????????????? цвет/рассположение*/}
         </div>
     );
 }

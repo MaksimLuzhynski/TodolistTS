@@ -1,3 +1,4 @@
+import { setErrorAC, SetErrorActionType, SetStatusActionType, setStatusAC } from './app-reducer';
 import { RootStateType } from './store';
 import { action } from '@storybook/addon-actions';
 import { v1 } from "uuid";
@@ -81,9 +82,11 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => ({ typ
 
 // thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatusAC('loading'))
     tasksAPI.getTasks(todolistId)
         .then((res) => {
-            dispatch(setTasksAC(res.data.items, todolistId))
+            dispatch(setTasksAC(res.data.items, todolistId));
+            dispatch(setStatusAC('succeeded'));
         })
 }
 export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsType>) => {
@@ -93,9 +96,22 @@ export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: 
         })
 }
 export const addTaskTC = (newTaskTitle: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatusAC('loading'))
     tasksAPI.addTask(todolistId, newTaskTitle)
         .then((res) => {
-            dispatch(addTaskAC(res.data.data.item))
+            if (res.data.resultCode === 0) {
+                dispatch(addTaskAC(res.data.data.item))
+            }
+            else {
+                if (res.data.messages.length) {
+                    dispatch(setErrorAC(res.data.messages[0]))
+                }
+                else {
+                    dispatch(setErrorAC('Some error!!!'))
+                }
+                dispatch(setStatusAC('failed'))
+            }
+            dispatch(setStatusAC('succeeded'))
         })
 }
 export const updateTaskTC = (todolistId: string, UIModel: ModelUpdateTaskType, taskId: string) => (dispatch: Dispatch<ActionsType>, getState: () => RootStateType) => {
@@ -142,8 +158,9 @@ type ActionsType =
     | AddTodolistActionType
     | RemoveTodolistActionType
     | SetTodolistsActionType
+    | SetErrorActionType
+    | SetStatusActionType
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof setTasksAC>
     | ReturnType<typeof updateTaskAC>
-

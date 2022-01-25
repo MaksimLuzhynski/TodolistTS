@@ -1,6 +1,6 @@
 import { TaskPriorities, TaskStatuses } from "../api/tasks-api";
-import { TasksStateType } from "../app/App";
-import { tasksReducer } from "./tasks-reducer";
+// import { TasksStateType } from "../app/App";
+import { tasksReducer, TasksStateType } from "./tasks-reducer";
 import { addTodolistAC, removeTodolistAC, todolistsReducer, TodolistType } from "./todolists-reducer";
 
 test('ids should be equals', () => {
@@ -11,6 +11,7 @@ test('ids should be equals', () => {
         id: "gtrgrgrgg",
         title: "new todolist",
         filter: "all",
+        entytiStatus: 'idle',
         addedDate: "",
         order: 0,
     });
