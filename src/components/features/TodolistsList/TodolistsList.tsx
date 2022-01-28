@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import {Grid, Paper} from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from "react-redux";
 import { TaskStatuses } from "../../../api/tasks-api";
 import { RootStateType } from "../../../state/store";
@@ -66,11 +66,12 @@ export const TodolistsList: React.FC = () => {
                             <Grid item>
                                 <Paper style={{ padding: "20px", backgroundColor: " #263648" }}>      {/*ЦВЕТ #23272e*/}
                                     <Todolist
+                                        // id={item.id}
+                                        // title={item.title}
+                                        // filter={item.filter}
                                         key={item.id}
-                                        id={item.id}
-                                        title={item.title}
+                                        todolist={item}
                                         tasks={tasksForTodolist}
-                                        filter={item.filter}
                                         changeFilter={changeFilter}
                                         removeTask={removeTask}
                                         addTask={addTask}

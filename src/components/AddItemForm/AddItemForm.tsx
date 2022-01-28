@@ -5,9 +5,10 @@ import styles from './AddItemForm.module.css'
 
 export type AddItemFormPropsType = {
     addItem: (newTaskTitle: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo((props: AddItemFormPropsType )=> {
+export const AddItemForm = React.memo(({addItem, disabled=false}: AddItemFormPropsType) => {
 
     let [newTaskTitle, setNewTaskTitle] = useState("")
     let [error, setError] = useState<null | string>(null)
@@ -25,7 +26,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType )=> {
 
     const addNewTaskTitle = () => {
         if (newTaskTitle.trim() !== "") {
-            props.addItem(newTaskTitle);
+            addItem(newTaskTitle);
             setNewTaskTitle("");
         }
         else {
@@ -38,6 +39,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType )=> {
         <div>
             <div>
                 <TextField
+                    disabled={disabled}
                     onChange={onNewTaskTitleChangeHandler}
                     onKeyPress={onKeyPressHandler}
                     variant={"standard"}
@@ -49,6 +51,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType )=> {
                     color={"primary"}
                 />
                 <Button
+                    disabled={disabled}
                     onClick={addNewTaskTitle}
                     variant={"contained"}
                     style={{ backgroundColor: "#61dafb" }}

@@ -1,4 +1,4 @@
-import { setErrorAC, SetErrorActionType, SetStatusActionType, setStatusAC } from './app-reducer';
+import { setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from './app-reducer';
 import { RootStateType } from './store';
 import { action } from '@storybook/addon-actions';
 import { v1 } from "uuid";
@@ -82,21 +82,23 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => ({ typ
 
 // thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
     tasksAPI.getTasks(todolistId)
         .then((res) => {
-            dispatch(setTasksAC(res.data.items, todolistId));
-            dispatch(setStatusAC('succeeded'));
+            dispatch(setTasksAC(res.data.items, todolistId))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatusAC('loading'))
     tasksAPI.removeTask(todolistId, taskId)
         .then((res) => {
             dispatch(removeTaskAC(taskId, todolistId))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 export const addTaskTC = (newTaskTitle: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
     tasksAPI.addTask(todolistId, newTaskTitle)
         .then((res) => {
             if (res.data.resultCode === 0) {
@@ -104,14 +106,14 @@ export const addTaskTC = (newTaskTitle: string, todolistId: string) => (dispatch
             }
             else {
                 if (res.data.messages.length) {
-                    dispatch(setErrorAC(res.data.messages[0]))
+                    dispatch(setAppErrorAC(res.data.messages[0]))
                 }
                 else {
-                    dispatch(setErrorAC('Some error!!!'))
+                    dispatch(setAppErrorAC('Some error!!!'))
                 }
-                dispatch(setStatusAC('failed'))
+                dispatch(setAppStatusAC('failed'))
             }
-            dispatch(setStatusAC('succeeded'))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 export const updateTaskTC = (todolistId: string, UIModel: ModelUpdateTaskType, taskId: string) => (dispatch: Dispatch<ActionsType>, getState: () => RootStateType) => {
@@ -121,7 +123,6 @@ export const updateTaskTC = (todolistId: string, UIModel: ModelUpdateTaskType, t
         console.warn('Some error with change task!')
         return
     }
-
     const APIModel: UpdateTaskType = {
         title: task.title,
         description: task.description,
@@ -131,10 +132,11 @@ export const updateTaskTC = (todolistId: string, UIModel: ModelUpdateTaskType, t
         status: task.status,
         ...UIModel
     }
-
+    dispatch(setAppStatusAC('loading'))
     tasksAPI.updateTask(todolistId, taskId, APIModel)
         .then((res) => {
             dispatch(updateTaskAC(taskId, UIModel, todolistId))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 
@@ -158,8 +160,8 @@ type ActionsType =
     | AddTodolistActionType
     | RemoveTodolistActionType
     | SetTodolistsActionType
-    | SetErrorActionType
-    | SetStatusActionType
+    | SetAppErrorActionType
+    | SetAppStatusActionType
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof setTasksAC>
