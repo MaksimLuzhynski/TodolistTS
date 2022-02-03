@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback } from "react"
-import { Checkbox, IconButton } from '@material-ui/core'
-import { Delete } from '@material-ui/icons'
+import { Checkbox, IconButton } from '@mui/material'
+import { Delete } from '@mui/icons-material'
 import { EditableSpan } from "../../../../EditableSpan/EditableSpan"
 import styles from './Task.module.css'
 import { TaskStatuses } from "../../../../../api/tasks-api"

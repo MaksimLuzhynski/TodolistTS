@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
 import { TaskStatuses } from "../../../api/tasks-api";
 import { RootStateType } from "../../../state/store";

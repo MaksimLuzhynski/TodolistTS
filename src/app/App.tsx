@@ -1,6 +1,6 @@
-import { AppBar, Button, Container, Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, Container, Grid, IconButton, Toolbar, Typography } from '@mui/material';
 import './App.css';
-import { Menu } from '@material-ui/icons';
+import { Menu } from '@mui/icons-material';
 import { TodolistsList } from '../components/features/TodolistsList/TodolistsList'
 import { LinearProgress } from '@mui/material';
 import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar';
