@@ -37,7 +37,7 @@ export type TodolistAPIType = {
     addedDate: string
     order: number
 }
-type ResponseType<D = {}> = {
+export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>

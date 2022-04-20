@@ -4,6 +4,7 @@ import thunk from "redux-thunk"
 import { v1 } from "uuid"
 import { TaskPriorities, TaskStatuses } from "../api/tasks-api"
 import { appReducer } from "../state/app-reducer"
+import { loginReducer } from "../state/login-reducer"
 import { RootStateType } from "../state/store"
 import { tasksReducer } from "../state/tasks-reducer"
 import { todolistsReducer } from "../state/todolists-reducer"
@@ -12,7 +13,8 @@ import { todolistsReducer } from "../state/todolists-reducer"
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    login: loginReducer
 })
 
 const initialGlobalState = {
@@ -36,6 +38,12 @@ const initialGlobalState = {
     app: {
         status: "idle",
         error: null
+    },
+    login: {
+        email: '',
+        password: '',
+        rememberMe: false,
+        captcha: ''
     }
 }
 

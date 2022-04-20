@@ -49,6 +49,8 @@ export const AddItemForm = React.memo(({addItem, disabled=false}: AddItemFormPro
                     // className={error ? styles.error : ""}
                     error={!!error}                                   //         ????????????????
                     color={"primary"}
+                    //   sx={{ input: { color: "#61dafb" } }}     // поменять цвет шрифта???
+                    //   sx={{ input: { background: "#61dafb" } }}
                 />
                 <Button
                     disabled={disabled}

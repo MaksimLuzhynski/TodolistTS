@@ -28,7 +28,7 @@ export const tasksAPI = {
     },
 
     updateTask(todolistId: string, taskId: string, model: UpdateTaskType) {                                                  //??????????????????
-        return instans.put<UpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instans.put<ResponseType<UpdateTaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
 
 }

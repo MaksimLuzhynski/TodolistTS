@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppBar, Button, Container, Grid, IconButton, Toolbar, Typography } from '@mui/material';
 import './App.css';
 import { Menu } from '@mui/icons-material';
@@ -7,6 +8,9 @@ import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 import { useSelector } from 'react-redux';
 import { RequestStatusType } from '../state/app-reducer';
 import { RootStateType } from '../state/store';
+import { Login } from '../components/features/Login/Login';
+import { Route, Routes } from 'react-router-dom';
+
 
 
 
@@ -39,7 +43,11 @@ export function App() {
                 {status === 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
-                <TodolistsList />
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={<TodolistsList />} />
+                    <Route path="*" element={<h1>404: PAGE NOT FOUND</h1>} />
+                </Routes>
             </Container>
             <ErrorSnackbar />      {/*  ??????????????????????? цвет/рассположение*/}
         </div>

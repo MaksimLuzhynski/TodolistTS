@@ -1,7 +1,8 @@
 {
   "name": "todolist-ts",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage":"https://MaksimLuzhynski.github.io/TodolistTS",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^10.3.0",
@@ -16,12 +17,15 @@
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
     "@types/react-redux": "^7.1.20",
+    "@types/react-router-dom": "^5.3.3",
     "@types/uuid": "^8.3.1",
     "axios": "^0.24.0",
+    "formik": "^2.2.9",
     "gh-pages": "^3.2.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.5",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
     "redux-thunk": "^2.4.1",
@@ -30,6 +34,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
